@@ -1,0 +1,5 @@
+com\copan\tcp\ClientHandler.class
+com\copan\App.class
+com\copan\tcp\TCPServer.class
+com\copan\tcp\TCPClient.class
+com\copan\tcp\TCPDemo.class
