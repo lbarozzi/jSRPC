@@ -10,8 +10,8 @@ import java.util.logging.Logger;
  * Cryptographic TCP client that extends TCPClient to support secure communications.
  * Uses RSA keys for encryption and digital signatures for authentication and integrity.
  */
-public class CriptoClient extends TCPClient {
-    private static final Logger logger = Logger.getLogger(CriptoClient.class.getName());
+public class CryptoClient extends TCPClient {
+    private static final Logger logger = Logger.getLogger(CryptoClient.class.getName());
     
     private final KeyManager keyManager;
     private final String clientKeyName;
@@ -26,7 +26,7 @@ public class CriptoClient extends TCPClient {
      * @param keyManager Cryptographic key manager
      * @param clientKeyName Identifying name for client keys
      */
-    public CriptoClient(String serverHost, int serverPort, KeyManager keyManager, String clientKeyName) {
+    public CryptoClient(String serverHost, int serverPort, KeyManager keyManager, String clientKeyName) {
         super(serverHost, serverPort);
         this.keyManager = keyManager;
         this.clientKeyName = clientKeyName;
@@ -41,7 +41,7 @@ public class CriptoClient extends TCPClient {
     /**
      * Constructor with default key name
      */
-    public CriptoClient(String serverHost, int serverPort, KeyManager keyManager) {
+    public CryptoClient(String serverHost, int serverPort, KeyManager keyManager) {
         this(serverHost, serverPort, keyManager, "client");
     }
     

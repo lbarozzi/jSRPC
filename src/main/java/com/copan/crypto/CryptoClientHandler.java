@@ -11,8 +11,8 @@ import java.util.logging.Logger;
  * Handler per client crittografici che estende ClientHandler per supportare comunicazioni sicure.
  * Gestisce l'handshake crittografico e i messaggi cifrati con RSA.
  */
-public class CriptoClientHandler extends ClientHandler {
-    private static final Logger logger = Logger.getLogger(CriptoClientHandler.class.getName());
+public class CryptoClientHandler extends ClientHandler {
+    private static final Logger logger = Logger.getLogger(CryptoClientHandler.class.getName());
     
     private final KeyManager keyManager;
     private final String serverKeyName;
@@ -26,7 +26,7 @@ public class CriptoClientHandler extends ClientHandler {
      * @param keyManager Gestore delle chiavi crittografiche
      * @param serverKeyName Nome identificativo per le chiavi del server
      */
-    public CriptoClientHandler(Socket clientSocket, KeyManager keyManager, String serverKeyName) {
+    public CryptoClientHandler(Socket clientSocket, KeyManager keyManager, String serverKeyName) {
         super(clientSocket);
         this.keyManager = keyManager;
         this.serverKeyName = serverKeyName;

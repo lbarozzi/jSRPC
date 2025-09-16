@@ -18,7 +18,7 @@ public class CryptoTest {
     private static final String TEST_KEYS_DIR = "test_crypto_keys";
     
     private KeyManager keyManager;
-    private CriptoServer server;
+    private CryptoServer server;
     
     @Before
     public void setUp() throws IOException {
@@ -26,7 +26,7 @@ public class CryptoTest {
         cleanupTestKeys();
         
         keyManager = new KeyManager(TEST_KEYS_DIR);
-        server = new CriptoServer(TEST_PORT, 3, keyManager, "test_server");
+        server = new CryptoServer(TEST_PORT, 3, keyManager, "test_server");
     }
     
     @After
@@ -62,7 +62,7 @@ public class CryptoTest {
     
     @Test
     public void testCryptoClientCreation() {
-        CriptoClient client = new CriptoClient("localhost", TEST_PORT, keyManager, "test_client");
+        CryptoClient client = new CryptoClient("localhost", TEST_PORT, keyManager, "test_client");
         
         assertNotNull("Client non deve essere null", client);
         assertEquals("Host server", "localhost", client.getServerHost());
@@ -118,7 +118,7 @@ public class CryptoTest {
         Thread.sleep(1000);
         
         // Test connessione client
-        CriptoClient client = new CriptoClient("localhost", TEST_PORT, keyManager, "test_client");
+        CryptoClient client = new CryptoClient("localhost", TEST_PORT, keyManager, "test_client");
         
         try {
             client.connect();
@@ -160,7 +160,7 @@ public class CryptoTest {
         Thread.sleep(1000);
         
         // Test messaggi sicuri
-        CriptoClient client = new CriptoClient("localhost", TEST_PORT, keyManager, "test_client");
+        CryptoClient client = new CryptoClient("localhost", TEST_PORT, keyManager, "test_client");
         
         try {
             client.connect();

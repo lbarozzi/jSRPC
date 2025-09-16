@@ -10,8 +10,8 @@ import java.util.logging.Logger;
  * Cryptographic TCP server that extends TCPServer to support secure communications.
  * Uses RSA keys for encryption and digital signatures for authentication and integrity.
  */
-public class CriptoServer extends TCPServer {
-    private static final Logger logger = Logger.getLogger(CriptoServer.class.getName());
+public class CryptoServer extends TCPServer {
+    private static final Logger logger = Logger.getLogger(CryptoServer.class.getName());
     
     private final KeyManager keyManager;
     private final String serverKeyName;
@@ -24,7 +24,7 @@ public class CriptoServer extends TCPServer {
      * @param keyManager Cryptographic key manager
      * @param serverKeyName Identifying name for server keys
      */
-    public CriptoServer(int port, int maxThreads, KeyManager keyManager, String serverKeyName) {
+    public CryptoServer(int port, int maxThreads, KeyManager keyManager, String serverKeyName) {
         super(port, maxThreads);
         this.keyManager = keyManager;
         this.serverKeyName = serverKeyName;
@@ -38,14 +38,14 @@ public class CriptoServer extends TCPServer {
     /**
      * Simplified constructor with default values
      */
-    public CriptoServer(int port, KeyManager keyManager, String serverKeyName) {
+    public CryptoServer(int port, KeyManager keyManager, String serverKeyName) {
         this(port, 10, keyManager, serverKeyName);
     }
     
     /**
      * Constructor with default key name
      */
-    public CriptoServer(int port, int maxThreads, KeyManager keyManager) {
+    public CryptoServer(int port, int maxThreads, KeyManager keyManager) {
         this(port, maxThreads, keyManager, "server");
     }
     
@@ -69,7 +69,7 @@ public class CriptoServer extends TCPServer {
                            clientSocket.getRemoteSocketAddress());
                 
                 // Create a CriptoClientHandler instead of normal ClientHandler
-                CriptoClientHandler clientHandler = new CriptoClientHandler(
+                CryptoClientHandler clientHandler = new CryptoClientHandler(
                     clientSocket, keyManager, serverKeyName
                 );
                 

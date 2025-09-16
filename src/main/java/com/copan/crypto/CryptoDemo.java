@@ -20,7 +20,7 @@ public class CryptoDemo {
             try {
                 System.out.println("Avvio CriptoServer sulla porta " + PORT + "...");
                 
-                CriptoServer server = new CriptoServer(PORT, 5, keyManager, "demo_server");
+                CryptoServer server = new CryptoServer(PORT, 5, keyManager, "demo_server");
                 server.start();
                 
                 // Il server rimane attivo per il test
@@ -44,7 +44,7 @@ public class CryptoDemo {
                 
                 System.out.println("Connessione del CriptoClient al server...");
                 
-                CriptoClient client = new CriptoClient("localhost", PORT, keyManager, "demo_client");
+                CryptoClient client = new CryptoClient("localhost", PORT, keyManager, "demo_client");
                 client.connect();
                 
                 System.out.println("Connessione stabilita, handshake crittografico completato: " + 
