@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.copan.tcp.TCPClientTest" time="3.624" tests="16" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.copan.tcp.TCPClientTest" time="3.616" tests="16" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="IT"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Microsoft\jdk-17.0.16.8-hotspot\bin"/>
-    <property name="sun.java.command" value="C:\Users\leona\AppData\Local\Temp\surefire17577559473367549172\surefirebooter8196950966035768333.jar C:\Users\leona\AppData\Local\Temp\surefire17577559473367549172 2025-09-16T15-50-17_900-jvmRun1 surefire7010863737106656538tmp surefire_014894110667407714849tmp"/>
+    <property name="sun.java.command" value="C:\Users\leona\AppData\Local\Temp\surefire17415167805521557768\surefirebooter14037300617455109153.jar C:\Users\leona\AppData\Local\Temp\surefire17415167805521557768 2025-09-16T16-28-30_833-jvmRun1 surefire11746636564907024061tmp surefire_09263601902519974609tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\leona\source\repos\lbarozzi\Nuova cartella\jSRPC\target\test-classes;C:\Users\leona\source\repos\lbarozzi\Nuova cartella\jSRPC\target\classes;C:\Users\leona\.m2\repository\junit\junit\4.11\junit-4.11.jar;C:\Users\leona\.m2\repository\org\hamcrest\hamcrest-core\1.3\hamcrest-core-1.3.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\leona\AppData\Local\Temp\surefire17577559473367549172\surefirebooter8196950966035768333.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\leona\AppData\Local\Temp\surefire17415167805521557768\surefirebooter14037300617455109153.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.16+8-LTS"/>
@@ -58,20 +58,20 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testConnectToInvalidServer" classname="com.copan.tcp.TCPClientTest" time="0.269"/>
-  <testcase name="testConnectTwice" classname="com.copan.tcp.TCPClientTest" time="0.249"/>
-  <testcase name="testDisconnectWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.221"/>
-  <testcase name="testReceiveMessageWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.216"/>
-  <testcase name="testMultipleMessages" classname="com.copan.tcp.TCPClientTest" time="0.218"/>
-  <testcase name="testSendAndReceiveMessage" classname="com.copan.tcp.TCPClientTest" time="0.239"/>
-  <testcase name="testClientCreation" classname="com.copan.tcp.TCPClientTest" time="0.207"/>
-  <testcase name="testConnectAndDisconnect" classname="com.copan.tcp.TCPClientTest" time="0.218"/>
-  <testcase name="testReconnection" classname="com.copan.tcp.TCPClientTest" time="0.217"/>
-  <testcase name="testTimeCommand" classname="com.copan.tcp.TCPClientTest" time="0.228"/>
-  <testcase name="testPingCommand" classname="com.copan.tcp.TCPClientTest" time="0.231"/>
-  <testcase name="testHelpCommand" classname="com.copan.tcp.TCPClientTest" time="0.217"/>
-  <testcase name="testHelloCommand" classname="com.copan.tcp.TCPClientTest" time="0.223"/>
-  <testcase name="testSendMessageWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.211"/>
-  <testcase name="testEmptyMessage" classname="com.copan.tcp.TCPClientTest" time="0.22"/>
-  <testcase name="testCaseInsensitiveCommands" classname="com.copan.tcp.TCPClientTest" time="0.234"/>
+  <testcase name="testConnectToInvalidServer" classname="com.copan.tcp.TCPClientTest" time="0.201"/>
+  <testcase name="testConnectTwice" classname="com.copan.tcp.TCPClientTest" time="0.237"/>
+  <testcase name="testDisconnectWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.211"/>
+  <testcase name="testReceiveMessageWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.207"/>
+  <testcase name="testMultipleMessages" classname="com.copan.tcp.TCPClientTest" time="0.274"/>
+  <testcase name="testSendAndReceiveMessage" classname="com.copan.tcp.TCPClientTest" time="0.228"/>
+  <testcase name="testClientCreation" classname="com.copan.tcp.TCPClientTest" time="0.22"/>
+  <testcase name="testConnectAndDisconnect" classname="com.copan.tcp.TCPClientTest" time="0.232"/>
+  <testcase name="testReconnection" classname="com.copan.tcp.TCPClientTest" time="0.242"/>
+  <testcase name="testTimeCommand" classname="com.copan.tcp.TCPClientTest" time="0.225"/>
+  <testcase name="testPingCommand" classname="com.copan.tcp.TCPClientTest" time="0.224"/>
+  <testcase name="testHelpCommand" classname="com.copan.tcp.TCPClientTest" time="0.223"/>
+  <testcase name="testHelloCommand" classname="com.copan.tcp.TCPClientTest" time="0.226"/>
+  <testcase name="testSendMessageWithoutConnection" classname="com.copan.tcp.TCPClientTest" time="0.215"/>
+  <testcase name="testEmptyMessage" classname="com.copan.tcp.TCPClientTest" time="0.224"/>
+  <testcase name="testCaseInsensitiveCommands" classname="com.copan.tcp.TCPClientTest" time="0.219"/>
 </testsuite>

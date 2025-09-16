@@ -68,7 +68,7 @@ public class TCPServer {
     /**
      * Loop principale per accettare le connessioni client.
      */
-    private void acceptConnections() {
+    protected void acceptConnections() {
         while (running && !serverSocket.isClosed()) {
             try {
                 Socket clientSocket = serverSocket.accept();
@@ -144,5 +144,23 @@ public class TCPServer {
      */
     public int getMaxThreads() {
         return maxThreads;
+    }
+    
+    /**
+     * Restituisce il server socket per le classi derivate.
+     * 
+     * @return Il server socket
+     */
+    protected ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+    
+    /**
+     * Restituisce l'executor service per le classi derivate.
+     * 
+     * @return L'executor service
+     */
+    protected ExecutorService getExecutorService() {
+        return threadPool;
     }
 }

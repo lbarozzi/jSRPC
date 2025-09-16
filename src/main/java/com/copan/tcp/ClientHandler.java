@@ -75,7 +75,7 @@ public class ClientHandler implements Runnable {
      * 
      * @throws IOException Se si verifica un errore nella configurazione degli stream
      */
-    private void setupStreams() throws IOException {
+    protected void setupStreams() throws IOException {
         input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         output = new PrintWriter(clientSocket.getOutputStream(), true);
     }
@@ -86,7 +86,7 @@ public class ClientHandler implements Runnable {
      * @return Il messaggio ricevuto, o null se la connessione è chiusa
      * @throws IOException Se si verifica un errore durante la lettura
      */
-    private String receiveMessage() throws IOException {
+    protected String receiveMessage() throws IOException {
         return input.readLine();
     }
     
@@ -95,7 +95,7 @@ public class ClientHandler implements Runnable {
      * 
      * @param message Il messaggio da inviare
      */
-    private void sendMessage(String message) {
+    protected void sendMessage(String message) {
         if (output != null) {
             output.println(message);
         }
@@ -108,7 +108,7 @@ public class ClientHandler implements Runnable {
      * @param message Il messaggio ricevuto dal client
      * @return La risposta da inviare al client
      */
-    private String processMessage(String message) {
+    protected String processMessage(String message) {
         if (message == null || message.trim().isEmpty()) {
             return "Messaggio vuoto ricevuto.";
         }
@@ -176,5 +176,35 @@ public class ClientHandler implements Runnable {
      */
     public String getClientAddress() {
         return clientSocket != null ? clientSocket.getInetAddress().toString() : "Unknown";
+    }
+    
+    /**
+     * Restituisce il BufferedReader per la lettura dei messaggi.
+     * Metodo protetto per l'estensione in sottoclassi.
+     * 
+     * @return BufferedReader per input
+     */
+    protected BufferedReader getBufferedReader() {
+        return input;
+    }
+    
+    /**
+     * Restituisce il PrintWriter per l'invio dei messaggi.
+     * Metodo protetto per l'estensione in sottoclassi.
+     * 
+     * @return PrintWriter per output
+     */
+    protected PrintWriter getPrintWriter() {
+        return output;
+    }
+    
+    /**
+     * Restituisce il socket del client.
+     * Metodo protetto per l'estensione in sottoclassi.
+     * 
+     * @return Socket del client
+     */
+    protected Socket getSocket() {
+        return clientSocket;
     }
 }

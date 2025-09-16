@@ -68,7 +68,7 @@ public class TCPClient {
      * 
      * @throws IOException Se si verifica un errore nella configurazione degli stream
      */
-    private void setupStreams() throws IOException {
+    protected void setupStreams() throws IOException {
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         output = new PrintWriter(socket.getOutputStream(), true);
     }
@@ -214,5 +214,41 @@ public class TCPClient {
      */
     public String getHelp() throws IOException {
         return sendAndReceive("help");
+    }
+    
+    /**
+     * Restituisce il socket per le classi derivate.
+     * 
+     * @return Il socket della connessione
+     */
+    protected Socket getSocket() {
+        return socket;
+    }
+    
+    /**
+     * Restituisce il BufferedReader per le classi derivate.
+     * 
+     * @return Il BufferedReader per la lettura
+     */
+    protected BufferedReader getInput() {
+        return input;
+    }
+    
+    /**
+     * Restituisce il PrintWriter per le classi derivate.
+     * 
+     * @return Il PrintWriter per la scrittura
+     */
+    protected PrintWriter getOutput() {
+        return output;
+    }
+    
+    /**
+     * Imposta lo stato di connessione per le classi derivate.
+     * 
+     * @param connected Lo stato di connessione
+     */
+    protected void setConnected(boolean connected) {
+        this.connected = connected;
     }
 }
