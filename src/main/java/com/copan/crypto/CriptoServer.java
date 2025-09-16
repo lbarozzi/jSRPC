@@ -76,7 +76,17 @@ public class CriptoServer extends TCPServer {
                 // Submit the task to the thread pool
                 ExecutorService executor = getExecutorService();
                 if (executor != null && !executor.isShutdown()) {
-                    executor.submit(clientHandler);
+                    try {
+                        executor.submit(clientHandler);
+                    } catch (java.util.concurrent.RejectedExecutionException e) {
+                        // Thread pool was shutdown between the check and submit
+                        logger.warning("Thread pool was shutdown, closing client connection");
+                        try {
+                            clientSocket.close();
+                        } catch (IOException closeEx) {
+                            logger.warning("Error closing client socket after rejected execution: " + closeEx.getMessage());
+                        }
+                    }
                 } else {
                     logger.warning("ExecutorService not available, closing client connection");
                     clientSocket.close();

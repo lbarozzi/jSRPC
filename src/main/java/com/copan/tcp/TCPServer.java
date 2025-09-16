@@ -79,7 +79,18 @@ public class TCPServer {
                     
                     // Create a new ClientHandler to manage the connection
                     ClientHandler handler = new ClientHandler(clientSocket);
-                    threadPool.submit(handler);
+                    
+                    try {
+                        threadPool.submit(handler);
+                    } catch (java.util.concurrent.RejectedExecutionException e) {
+                        // Thread pool was shutdown between the check and submit
+                        LOGGER.warning("Thread pool was shutdown, closing client connection");
+                        try {
+                            clientSocket.close();
+                        } catch (IOException closeEx) {
+                            LOGGER.log(Level.WARNING, "Error closing client socket after rejected execution", closeEx);
+                        }
+                    }
                 } else {
                     // The server is about to close, close the connection
                     clientSocket.close();
@@ -114,6 +125,17 @@ public class TCPServer {
         
         if (threadPool != null) {
             threadPool.shutdown();
+            try {
+                // Wait a bit for existing tasks to terminate
+                if (!threadPool.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    LOGGER.warning("Thread pool did not terminate gracefully, forcing shutdown");
+                    threadPool.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                LOGGER.warning("Interrupted while waiting for thread pool termination");
+                threadPool.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
         }
         
         LOGGER.info("TCP server stopped");
