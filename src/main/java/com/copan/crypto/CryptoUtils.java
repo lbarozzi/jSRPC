@@ -14,7 +14,8 @@ public class CryptoUtils {
     
     // Algoritmi e parametri crittografici
     private static final String RSA_ALGORITHM = "RSA";
-    private static final String CIPHER_TRANSFORMATION = "RSA/ECB/PKCS1Padding";
+    private static final String CIPHER_TRANSFORMATION = "RSA/ECB/OAEPWITHSHA-256ANDMGF1PADDING" ; 
+    //"RSA/ECB/PKCS1Padding";
     private static final String SIGNATURE_ALGORITHM = "SHA256withRSA";
     private static final String HASH_ALGORITHM = "SHA-256";
     
