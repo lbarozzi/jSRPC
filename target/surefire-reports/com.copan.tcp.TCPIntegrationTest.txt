@@ -1,4 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: com.copan.tcp.TCPIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.879 s - in com.copan.tcp.TCPIntegrationTest
+Tests run: 8, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.668 s <<< FAILURE! - in com.copan.tcp.TCPIntegrationTest
+testQuitCommand(com.copan.tcp.TCPIntegrationTest)  Time elapsed: 0.206 s  <<< FAILURE!
+java.lang.AssertionError: La comunicazione dovrebbe fallire dopo quit
+	at com.copan.tcp.TCPIntegrationTest.testQuitCommand(TCPIntegrationTest.java:234)
+
