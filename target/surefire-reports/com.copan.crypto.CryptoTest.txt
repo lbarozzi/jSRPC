@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: com.copan.crypto.CryptoTest
--------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.736 s - in com.copan.crypto.CryptoTest
