@@ -1,7 +1,0 @@
-com/copan/crypto/CryptoTest.class
-com/copan/tcp/TCPClientTest.class
-com/copan/tcp/TCPServerTest.class
-com/copan/crypto/KeyGeneratorTest.class
-com/copan/crypto/KeyGeneratorIntegrationTest.class
-com/copan/tcp/TCPIntegrationTest.class
-com/copan/AppTest.class
