@@ -109,8 +109,8 @@ public class TCPClientTest {
         
         String response = client.getTime();
         assertNotNull(response);
-        assertTrue("La risposta dovrebbe contenere 'Ora corrente'", 
-                  response.contains("Ora corrente"));
+        assertTrue("The response should contain 'Current time'", 
+                  response.contains("Current time"));
     }
     
     @Test
@@ -119,8 +119,8 @@ public class TCPClientTest {
         
         String response = client.getHelp();
         assertNotNull(response);
-        assertTrue("La risposta dovrebbe contenere 'Comandi disponibili'", 
-                  response.contains("Comandi disponibili"));
+        assertTrue("The response should contain 'Available commands'", 
+                  response.contains("Available commands"));
     }
     
     @Test
@@ -194,8 +194,8 @@ public class TCPClientTest {
         
         String response = client.sendAndReceive("");
         assertNotNull(response);
-        assertTrue("La risposta dovrebbe indicare messaggio vuoto", 
-                  response.contains("vuoto"));
+        assertTrue("The response should indicate empty message", 
+                  response.contains("Empty"));
     }
     
     @Test

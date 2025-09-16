@@ -56,8 +56,8 @@ public class TCPIntegrationTest {
             
             // Test vari comandi
             assertEquals("pong", client.ping());
-            assertTrue(client.getTime().contains("Ora corrente"));
-            assertTrue(client.getHelp().contains("Comandi disponibili"));
+            assertTrue(client.getTime().contains("Current time"));
+            assertTrue(client.getHelp().contains("Available commands"));
             
             String echoResponse = client.sendAndReceive("Test message");
             assertTrue(echoResponse.contains("Test message"));
@@ -225,8 +225,8 @@ public class TCPIntegrationTest {
             // Invia comando quit
             String quitResponse = client.sendAndReceive("quit");
             assertNotNull(quitResponse);
-            assertTrue("La risposta dovrebbe confermare la chiusura", 
-                      quitResponse.contains("Arrivederci"));
+            assertTrue("The response should confirm closure", 
+                      quitResponse.contains("Goodbye"));
             
             // Il prossimo tentativo di comunicazione dovrebbe fallire
             try {
