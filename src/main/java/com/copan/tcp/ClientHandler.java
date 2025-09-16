@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * Classe che gestisce la comunicazione con un singolo client TCP in un thread separato.
- * Ogni istanza di ClientHandler gestisce una connessione client specifica.
+ * Class that handles communication with a single TCP client in a separate thread.
+ * Each ClientHandler instance manages a specific client connection.
  */
 public class ClientHandler implements Runnable {
     private static final Logger LOGGER = Logger.getLogger(ClientHandler.class.getName());
@@ -22,9 +22,9 @@ public class ClientHandler implements Runnable {
     private boolean connected;
     
     /**
-     * Costruttore per ClientHandler.
+     * Constructor for ClientHandler.
      * 
-     * @param clientSocket Il socket della connessione client da gestire
+     * @param clientSocket The client connection socket to manage
      */
     public ClientHandler(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -32,7 +32,7 @@ public class ClientHandler implements Runnable {
     }
     
     /**
-     * Metodo principale del thread che gestisce la comunicazione con il client.
+     * Main thread method that handles communication with the client.
      */
     @Override
     public void run() {
@@ -41,39 +41,39 @@ public class ClientHandler implements Runnable {
             connected = true;
             
             String clientAddress = clientSocket.getInetAddress().toString();
-            LOGGER.info("Iniziata gestione client: " + clientAddress);
+            LOGGER.info("Started handling client: " + clientAddress);
             
-            // Invia messaggio di benvenuto
-            sendMessage("Benvenuto! Connessione stabilita con il server.");
+            // Send welcome message
+            sendMessage("Welcome! Connection established with the server.");
             
-            // Loop principale per gestire i messaggi del client
+            // Main loop to handle client messages
             String inputMessage;
             while (connected && (inputMessage = receiveMessage()) != null) {
-                LOGGER.info("Messaggio ricevuto da " + clientAddress + ": " + inputMessage);
+                LOGGER.info("Message received from " + clientAddress + ": " + inputMessage);
                 
-                // Processa il messaggio e invia risposta
+                // Process the message and send response
                 String response = processMessage(inputMessage);
                 sendMessage(response);
                 
-                // Se il client invia "quit", termina la connessione
+                // If the client sends "quit", terminate the connection
                 if ("quit".equalsIgnoreCase(inputMessage.trim())) {
                     break;
                 }
             }
             
         } catch (SocketException e) {
-            LOGGER.info("Client disconnesso: " + clientSocket.getInetAddress());
+            LOGGER.info("Client disconnected: " + clientSocket.getInetAddress());
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Errore nella comunicazione con il client", e);
+            LOGGER.log(Level.SEVERE, "Error in communication with client", e);
         } finally {
             disconnect();
         }
     }
     
     /**
-     * Configura gli stream di input e output per la comunicazione.
+     * Configures input and output streams for communication.
      * 
-     * @throws IOException Se si verifica un errore nella configurazione degli stream
+     * @throws IOException If an error occurs during stream configuration
      */
     protected void setupStreams() throws IOException {
         input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -81,19 +81,19 @@ public class ClientHandler implements Runnable {
     }
     
     /**
-     * Riceve un messaggio dal client.
+     * Receives a message from the client.
      * 
-     * @return Il messaggio ricevuto, o null se la connessione è chiusa
-     * @throws IOException Se si verifica un errore durante la lettura
+     * @return The received message, or null if the connection is closed
+     * @throws IOException If an error occurs during reading
      */
     protected String receiveMessage() throws IOException {
         return input.readLine();
     }
     
     /**
-     * Invia un messaggio al client.
+     * Sends a message to the client.
      * 
-     * @param message Il messaggio da inviare
+     * @param message The message to send
      */
     protected void sendMessage(String message) {
         if (output != null) {
@@ -102,37 +102,37 @@ public class ClientHandler implements Runnable {
     }
     
     /**
-     * Processa un messaggio ricevuto dal client e genera una risposta.
-     * Questa è una implementazione base che può essere estesa per funzionalità più complesse.
+     * Processes a message received from the client and generates a response.
+     * This is a base implementation that can be extended for more complex functionality.
      * 
-     * @param message Il messaggio ricevuto dal client
-     * @return La risposta da inviare al client
+     * @param message The message received from the client
+     * @return The response to send to the client
      */
     protected String processMessage(String message) {
         if (message == null || message.trim().isEmpty()) {
-            return "Messaggio vuoto ricevuto.";
+            return "Empty message received.";
         }
         
         String trimmedMessage = message.trim().toLowerCase();
         
         switch (trimmedMessage) {
             case "hello":
-                return "Hello! Come posso aiutarti?";
+                return "Hello! How can I help you?";
             case "time":
-                return "Ora corrente: " + java.time.LocalDateTime.now().toString();
+                return "Current time: " + java.time.LocalDateTime.now().toString();
             case "ping":
                 return "pong";
             case "quit":
-                return "Arrivederci! Chiusura connessione.";
+                return "Goodbye! Closing connection.";
             case "help":
-                return "Comandi disponibili: hello, time, ping, help, quit";
+                return "Available commands: hello, time, ping, help, quit";
             default:
                 return "Echo: " + message;
         }
     }
     
     /**
-     * Disconnette il client e chiude tutte le risorse.
+     * Disconnects the client and closes all resources.
      */
     public void disconnect() {
         connected = false;
@@ -142,7 +142,7 @@ public class ClientHandler implements Runnable {
                 input.close();
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Errore durante la chiusura dell'input stream", e);
+            LOGGER.log(Level.WARNING, "Error closing input stream", e);
         }
         
         if (output != null) {
@@ -154,55 +154,55 @@ public class ClientHandler implements Runnable {
                 clientSocket.close();
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Errore durante la chiusura del socket client", e);
+            LOGGER.log(Level.WARNING, "Error closing client socket", e);
         }
         
-        LOGGER.info("Client disconnesso e risorse rilasciate");
+        LOGGER.info("Client disconnected and resources released");
     }
     
     /**
-     * Verifica se il client è connesso.
+     * Checks if the client is connected.
      * 
-     * @return true se il client è connesso, false altrimenti
+     * @return true if the client is connected, false otherwise
      */
     public boolean isConnected() {
         return connected && clientSocket != null && !clientSocket.isClosed();
     }
     
     /**
-     * Restituisce l'indirizzo IP del client.
+     * Returns the client's IP address.
      * 
-     * @return L'indirizzo IP del client
+     * @return The client's IP address
      */
     public String getClientAddress() {
         return clientSocket != null ? clientSocket.getInetAddress().toString() : "Unknown";
     }
     
     /**
-     * Restituisce il BufferedReader per la lettura dei messaggi.
-     * Metodo protetto per l'estensione in sottoclassi.
+     * Returns the BufferedReader for reading messages.
+     * Protected method for extension in subclasses.
      * 
-     * @return BufferedReader per input
+     * @return BufferedReader for input
      */
     protected BufferedReader getBufferedReader() {
         return input;
     }
     
     /**
-     * Restituisce il PrintWriter per l'invio dei messaggi.
-     * Metodo protetto per l'estensione in sottoclassi.
+     * Returns the PrintWriter for sending messages.
+     * Protected method for extension in subclasses.
      * 
-     * @return PrintWriter per output
+     * @return PrintWriter for output
      */
     protected PrintWriter getPrintWriter() {
         return output;
     }
     
     /**
-     * Restituisce il socket del client.
-     * Metodo protetto per l'estensione in sottoclassi.
+     * Returns the client socket.
+     * Protected method for extension in subclasses.
      * 
-     * @return Socket del client
+     * @return Client socket
      */
     protected Socket getSocket() {
         return clientSocket;

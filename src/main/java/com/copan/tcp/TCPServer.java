@@ -9,8 +9,8 @@ import java.util.logging.Logger;
 import java.util.logging.Level;
 
 /**
- * Server TCP multi-threaded che può gestire multiple connessioni client simultanee.
- * Utilizza un thread pool per gestire le connessioni client in modo efficiente.
+ * Multi-threaded TCP server that can handle multiple simultaneous client connections.
+ * Uses a thread pool to efficiently manage client connections.
  */
 public class TCPServer {
     private static final Logger LOGGER = Logger.getLogger(TCPServer.class.getName());
@@ -22,10 +22,10 @@ public class TCPServer {
     private final int maxThreads;
     
     /**
-     * Costruttore per il server TCP.
+     * Constructor for the TCP server.
      * 
-     * @param port La porta su cui il server ascolterà
-     * @param maxThreads Il numero massimo di thread nel pool
+     * @param port The port on which the server will listen
+     * @param maxThreads The maximum number of threads in the pool
      */
     public TCPServer(int port, int maxThreads) {
         this.port = port;
@@ -34,68 +34,68 @@ public class TCPServer {
     }
     
     /**
-     * Costruttore con numero di thread predefinito.
+     * Constructor with default number of threads.
      * 
-     * @param port La porta su cui il server ascolterà
+     * @param port The port on which the server will listen
      */
     public TCPServer(int port) {
         this(port, 10); // Default: 10 thread massimi
     }
     
     /**
-     * Avvia il server TCP.
-     * Il server inizierà ad ascoltare sulla porta specificata e accetterà connessioni client.
+     * Starts the TCP server.
+     * The server will start listening on the specified port and accept client connections.
      * 
-     * @throws IOException Se si verifica un errore durante l'avvio del server
+     * @throws IOException If an error occurs while starting the server
      */
     public void start() throws IOException {
         if (running) {
-            throw new IllegalStateException("Il server è già in esecuzione");
+            throw new IllegalStateException("The server is already running");
         }
         
         serverSocket = new ServerSocket(port);
         threadPool = Executors.newFixedThreadPool(maxThreads);
         running = true;
         
-        LOGGER.info(String.format("Server TCP avviato sulla porta %d con %d thread massimi", port, maxThreads));
+        LOGGER.info(String.format("TCP server started on port %d with %d max threads", port, maxThreads));
         
-        // Thread principale per accettare connessioni
+        // Main thread to accept connections
         Thread acceptThread = new Thread(this::acceptConnections);
         acceptThread.setDaemon(false);
         acceptThread.start();
     }
     
     /**
-     * Loop principale per accettare le connessioni client.
+     * Main loop to accept client connections.
      */
     protected void acceptConnections() {
         while (running && !serverSocket.isClosed()) {
             try {
                 Socket clientSocket = serverSocket.accept();
                 
-                // Controlla se il threadPool è ancora disponibile prima di sottomettere il task
+                // Check if the threadPool is still available before submitting the task
                 if (running && threadPool != null && !threadPool.isShutdown()) {
-                    LOGGER.info("Nuova connessione client accettata da: " + clientSocket.getInetAddress());
+                    LOGGER.info("New client connection accepted from: " + clientSocket.getInetAddress());
                     
-                    // Crea un nuovo ClientHandler per gestire la connessione
+                    // Create a new ClientHandler to manage the connection
                     ClientHandler handler = new ClientHandler(clientSocket);
                     threadPool.submit(handler);
                 } else {
-                    // Il server sta per chiudere, chiudi la connessione
+                    // The server is about to close, close the connection
                     clientSocket.close();
                 }
                 
             } catch (IOException e) {
                 if (running) {
-                    LOGGER.log(Level.SEVERE, "Errore durante l'accettazione di una connessione client", e);
+                    LOGGER.log(Level.SEVERE, "Error accepting client connection", e);
                 }
             }
         }
     }
     
     /**
-     * Ferma il server TCP.
-     * Chiude il server socket e termina tutti i thread del pool.
+     * Stops the TCP server.
+     * Closes the server socket and terminates all threads in the pool.
      */
     public void stop() {
         if (!running) {
@@ -109,56 +109,56 @@ public class TCPServer {
                 serverSocket.close();
             }
         } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Errore durante la chiusura del server socket", e);
+            LOGGER.log(Level.WARNING, "Error closing server socket", e);
         }
         
         if (threadPool != null) {
             threadPool.shutdown();
         }
         
-        LOGGER.info("Server TCP fermato");
+        LOGGER.info("TCP server stopped");
     }
     
     /**
-     * Verifica se il server è in esecuzione.
+     * Checks if the server is running.
      * 
-     * @return true se il server è in esecuzione, false altrimenti
+     * @return true if the server is running, false otherwise
      */
     public boolean isRunning() {
         return running;
     }
     
     /**
-     * Restituisce la porta su cui il server sta ascoltando.
+     * Returns the port on which the server is listening.
      * 
-     * @return La porta del server
+     * @return The server port
      */
     public int getPort() {
         return port;
     }
     
     /**
-     * Restituisce il numero massimo di thread nel pool.
+     * Returns the maximum number of threads in the pool.
      * 
-     * @return Il numero massimo di thread
+     * @return The maximum number of threads
      */
     public int getMaxThreads() {
         return maxThreads;
     }
     
     /**
-     * Restituisce il server socket per le classi derivate.
+     * Returns the server socket for derived classes.
      * 
-     * @return Il server socket
+     * @return The server socket
      */
     protected ServerSocket getServerSocket() {
         return serverSocket;
     }
     
     /**
-     * Restituisce l'executor service per le classi derivate.
+     * Returns the executor service for derived classes.
      * 
-     * @return L'executor service
+     * @return The executor service
      */
     protected ExecutorService getExecutorService() {
         return threadPool;

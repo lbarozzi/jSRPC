@@ -7,8 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.logging.Logger;
 
 /**
- * Server TCP crittografico che estende TCPServer per supportare comunicazioni sicure.
- * Utilizza chiavi RSA per cifratura e firme digitali per autenticazione e integrità.
+ * Cryptographic TCP server that extends TCPServer to support secure communications.
+ * Uses RSA keys for encryption and digital signatures for authentication and integrity.
  */
 public class CriptoServer extends TCPServer {
     private static final Logger logger = Logger.getLogger(CriptoServer.class.getName());
@@ -17,44 +17,44 @@ public class CriptoServer extends TCPServer {
     private final String serverKeyName;
     
     /**
-     * Costruttore per CriptoServer
+     * Constructor for CriptoServer
      * 
-     * @param port Porta su cui avviare il server
-     * @param maxThreads Numero massimo di thread per gestire i client
-     * @param keyManager Gestore delle chiavi crittografiche
-     * @param serverKeyName Nome identificativo per le chiavi del server
+     * @param port Port on which to start the server
+     * @param maxThreads Maximum number of threads to handle clients
+     * @param keyManager Cryptographic key manager
+     * @param serverKeyName Identifying name for server keys
      */
     public CriptoServer(int port, int maxThreads, KeyManager keyManager, String serverKeyName) {
         super(port, maxThreads);
         this.keyManager = keyManager;
         this.serverKeyName = serverKeyName;
         
-        // Genera o carica le chiavi del server all'avvio
+        // Generate or load server keys at startup
         keyManager.loadOrGenerateKeyPair(serverKeyName);
-        logger.info("CriptoServer inizializzato sulla porta " + port + 
-                   " con chiavi: " + serverKeyName);
+        logger.info("CriptoServer initialized on port " + port + 
+                   " with keys: " + serverKeyName);
     }
     
     /**
-     * Costruttore semplificato con valori di default
+     * Simplified constructor with default values
      */
     public CriptoServer(int port, KeyManager keyManager, String serverKeyName) {
         this(port, 10, keyManager, serverKeyName);
     }
     
     /**
-     * Costruttore con nome chiave di default
+     * Constructor with default key name
      */
     public CriptoServer(int port, int maxThreads, KeyManager keyManager) {
         this(port, maxThreads, keyManager, "server");
     }
     
     /**
-     * Override del metodo acceptConnections per gestire client crittografici
+     * Override of acceptConnections method to handle cryptographic clients
      */
     @Override
     protected void acceptConnections() {
-        logger.info("Server crittografico in ascolto per nuove connessioni...");
+        logger.info("Cryptographic server listening for new connections...");
         
         while (isRunning()) {
             try {
@@ -65,67 +65,67 @@ public class CriptoServer extends TCPServer {
                     break;
                 }
                 
-                logger.info("Nuova connessione client crittografica accettata da: " + 
+                logger.info("New cryptographic client connection accepted from: " + 
                            clientSocket.getRemoteSocketAddress());
                 
-                // Crea un CriptoClientHandler invece di ClientHandler normale
+                // Create a CriptoClientHandler instead of normal ClientHandler
                 CriptoClientHandler clientHandler = new CriptoClientHandler(
                     clientSocket, keyManager, serverKeyName
                 );
                 
-                // Sottometti il task al thread pool
+                // Submit the task to the thread pool
                 ExecutorService executor = getExecutorService();
                 if (executor != null && !executor.isShutdown()) {
                     executor.submit(clientHandler);
                 } else {
-                    logger.warning("ExecutorService non disponibile, chiudo connessione client");
+                    logger.warning("ExecutorService not available, closing client connection");
                     clientSocket.close();
                 }
                 
             } catch (IOException e) {
                 if (isRunning()) {
-                    logger.severe("Errore nell'accettazione connessione client: " + e.getMessage());
+                    logger.severe("Error accepting client connection: " + e.getMessage());
                 }
                 break;
             } catch (Exception e) {
-                logger.severe("Errore imprevisto nella gestione client: " + e.getMessage());
+                logger.severe("Unexpected error in client handling: " + e.getMessage());
                 break;
             }
         }
         
-        logger.info("Server crittografico ha smesso di accettare connessioni");
+        logger.info("Cryptographic server stopped accepting connections");
     }
     
     @Override
     public void start() throws IOException {
-        logger.info("Avvio CriptoServer sulla porta " + getPort() + 
-                   " con protezione crittografica RSA");
+        logger.info("Starting CriptoServer on port " + getPort() + 
+                   " with RSA cryptographic protection");
         super.start();
     }
     
     @Override
     public void stop() {
-        logger.info("Arresto CriptoServer...");
+        logger.info("Stopping CriptoServer...");
         super.stop();
-        logger.info("CriptoServer arrestato");
+        logger.info("CriptoServer stopped");
     }
     
     /**
-     * Restituisce il gestore delle chiavi utilizzato dal server
+     * Returns the key manager used by the server
      */
     public KeyManager getKeyManager() {
         return keyManager;
     }
     
     /**
-     * Restituisce il nome delle chiavi del server
+     * Returns the server's key name
      */
     public String getServerKeyName() {
         return serverKeyName;
     }
     
     /**
-     * Verifica se il server ha le chiavi configurate correttamente
+     * Checks if the server has correctly configured keys
      */
     public boolean hasValidKeys() {
         return keyManager.keyPairExists(serverKeyName);

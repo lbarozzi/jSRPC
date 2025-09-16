@@ -7,8 +7,8 @@ import java.util.Base64;
 import java.util.logging.Logger;
 
 /**
- * Client TCP crittografico che estende TCPClient per supportare comunicazioni sicure.
- * Utilizza chiavi RSA per cifratura e firme digitali per autenticazione e integrità.
+ * Cryptographic TCP client that extends TCPClient to support secure communications.
+ * Uses RSA keys for encryption and digital signatures for authentication and integrity.
  */
 public class CriptoClient extends TCPClient {
     private static final Logger logger = Logger.getLogger(CriptoClient.class.getName());
@@ -19,12 +19,12 @@ public class CriptoClient extends TCPClient {
     private boolean cryptoHandshakeComplete;
     
     /**
-     * Costruttore per CriptoClient
+     * Constructor for CriptoClient
      * 
-     * @param serverHost Indirizzo del server
-     * @param serverPort Porta del server
-     * @param keyManager Gestore delle chiavi crittografiche
-     * @param clientKeyName Nome identificativo per le chiavi del client
+     * @param serverHost Server address
+     * @param serverPort Server port
+     * @param keyManager Cryptographic key manager
+     * @param clientKeyName Identifying name for client keys
      */
     public CriptoClient(String serverHost, int serverPort, KeyManager keyManager, String clientKeyName) {
         super(serverHost, serverPort);
@@ -32,21 +32,21 @@ public class CriptoClient extends TCPClient {
         this.clientKeyName = clientKeyName;
         this.cryptoHandshakeComplete = false;
         
-        // Genera o carica le chiavi del client
+        // Generate or load client keys
         keyManager.loadOrGenerateKeyPair(clientKeyName);
-        logger.info("CriptoClient inizializzato per " + serverHost + ":" + serverPort + 
-                   " con chiavi: " + clientKeyName);
+        logger.info("CriptoClient initialized for " + serverHost + ":" + serverPort + 
+                   " with keys: " + clientKeyName);
     }
     
     /**
-     * Costruttore con nome chiave di default
+     * Constructor with default key name
      */
     public CriptoClient(String serverHost, int serverPort, KeyManager keyManager) {
         this(serverHost, serverPort, keyManager, "client");
     }
     
     /**
-     * Override della connessione per includere handshake crittografico
+     * Override of connection to include cryptographic handshake
      */
     @Override
     public void connect() throws IOException {
